@@ -1,6 +1,7 @@
 import styles from "./login.module.css";
 import { useActionState, useState } from "react";
 import logoDonkeyProfile from "./../../assets/logo-donkey-profile.png";
+import { Link } from "react-router";
 
 // todo: connecter au server
 // ==== Fake server ====
@@ -110,7 +111,7 @@ export default function LoginPage({ isConnected, setIsConnected, checkUserDB, sw
                     <span>Remember me</span>
                 </label>
                 {/* // todo: ajouter une page Link / popup button pour les mots de passe oublié  */}
-                <a href="#">Forgot password?</a>
+                <Link to="/forgot-pwd">Forgot password?</Link>
             </div>
 
             <button type="submit" disabled={isPending}>{(isPending || isConnected) ? "Submitting..." : "Log in"}</button>
