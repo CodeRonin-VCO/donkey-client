@@ -1,0 +1,50 @@
+:root {
+    /* ---- Colors ---- */
+    --text: #f8f9fa;
+    --bg: #212845;
+    --bg-section: #7880B5;
+    --tonal-pink: #FF87AB;
+    --tonal-yellow: #FFFD98;
+
+    --error: #FF5C7A;
+    --warning: #F97316;
+
+    /* ---- Fonts ---- */
+    --font-title: 'Audiowide', sans-serif;
+    --font-subtitle: 'Exo 2', sans-serif;
+    --font-paragraph: 'IBM Plex Serif', serif;
+    --font-button: 'Space Grotesk', sans-serif;
+    --font-accent: 'Genos', sans-serif;
+}
+
+
+h1 {
+    font-family: var(--font-title);
+}
+
+:where(h2, h3, h4, h5, h6) {
+    font-family: var(--font-subtitle);
+}
+
+body {
+    font-family: var(--font-paragraph);
+    font-weight: 300;
+}
+
+button {
+    font-family: var(--font-button);
+}
+
+:where(a, Link) {
+    font-family: var(--font-accent);
+}
+
+.page {
+    min-height: 100vh;
+    padding-left: clamp(5%, 5vw, 15%);
+    padding-right: clamp(5%, 5vw, 15%);
+    color: var(--text);
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+}

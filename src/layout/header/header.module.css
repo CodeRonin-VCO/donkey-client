@@ -1,0 +1,12 @@
+.header {
+    background-color: var(--bg-section);
+    display: flex;
+}
+
+.logo {
+    width: 15rem;
+
+    &>img {
+        border-radius: 50%;
+    }
+}
