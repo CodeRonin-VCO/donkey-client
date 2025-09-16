@@ -1,15 +1,17 @@
 import styles from "./header.module.css";
 import logoDonkey from "./../../assets/logo-donkey.jpg";
+import NavBar from "./components/nav-bar/nav-bar.jsx";
+import TitleLogo from "../../components/title-logo/title-logo.jsx";
 
 export default function HeaderPage() {
     
 
     return (
         <header className={styles.header}>
-            <div className={styles.logo}>
-                <img src={logoDonkey} alt="logo-donkey" />
+            <div className="small-title">
+                <TitleLogo />
             </div>
-            <p>Here will come my header</p>
+            <NavBar />
         </header>
     )
 }

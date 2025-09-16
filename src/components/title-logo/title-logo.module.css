@@ -1,0 +1,25 @@
+.title {
+    font-size: inherit;
+    text-align: center;
+    font-weight: 700;
+    background: linear-gradient(90deg, rgba(255, 253, 152, 1) 0%, rgba(255, 253, 152, 0.9) 25%, rgba(255, 135, 171, 0.8) 60%, rgba(255, 253, 152, 1) 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: slideGradient 10s ease-in-out forwards infinite;
+}
+
+@keyframes slideGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
