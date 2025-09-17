@@ -1,8 +1,0 @@
-.navbar {
-    display: flex;
-
-    li {
-        margin: 0 1rem;
-        display: inline-block;
-    }
-}

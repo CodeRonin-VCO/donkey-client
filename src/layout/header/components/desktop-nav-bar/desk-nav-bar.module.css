@@ -1,0 +1,33 @@
+.navbar {
+    display: none;
+
+    @media screen and (min-width:960px) {
+        display: flex;
+    }
+
+    li {
+        margin: 0 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.btn_disconnect,
+.nav_links {
+    width: fit-content;
+    margin: 0;
+    padding: .8rem 1.2rem;
+    color: var(--text);
+    font-family: var(--font-accent);
+    font-weight: 300;
+    text-decoration: none;
+    background-color: transparent;
+    border-radius: .8rem;
+    transition: .3s all ease-in-out;
+
+    &:hover {
+        background-color: var(--bg-section);
+        transform: translate(0);
+    }
+}

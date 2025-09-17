@@ -5,4 +5,5 @@
 
 ## Dépendances installées
 - react-router
+- FontAwesomeIcon
 

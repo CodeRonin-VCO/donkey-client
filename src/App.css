@@ -1,10 +1,12 @@
 :root {
     /* ---- Colors ---- */
     --text: #f8f9fa;
+    --text-transp: #f8f9fa71;
     --bg: #212845;
     --bg-section: #7880B5;
     --tonal-pink: #FF87AB;
     --tonal-yellow: #FFFD98;
+    --tonal-yellow-dark: #FFD700;
 
     --error: #FF5C7A;
     --warning: #F97316;
@@ -50,5 +52,9 @@ button {
 }
 
 .small-title {
-    font-size: clamp(1.6rem, 1.8rem + 0.4vw, 2.6rem);
+    font-size: clamp(3.6rem, 4rem   + 1.2vw, 6.4rem);
+    
+    @media screen and (min-width:960px) {
+        font-size: clamp(1.6rem, 1.8rem + 0.4vw, 2.6rem);
+    }
 }

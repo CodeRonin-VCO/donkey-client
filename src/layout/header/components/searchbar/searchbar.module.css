@@ -1,0 +1,37 @@
+.search_container {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    display: none;
+
+    @media screen and (min-width:960px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.searchBar_input {
+    width: 300px;
+    padding: .8rem 1.2rem .8rem 4rem;
+    color: var(--text);
+    font-family: var(--font-accent);
+    background: url("./../../../../assets/icons8-search-50.png") no-repeat;
+    background-size: 15px;
+    background-position: 15px;
+    background-color: #7880b56a;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    outline: none;
+    position: relative;
+    left: 0;
+    transition: .3s all ease-in-out;
+
+    @media screen and (min-width:1100px) {
+        &:focus {
+            width: 500px;
+            border: 1px solid var(--bg-section);
+            transition: .3s all ease-in-out;
+        }
+    }
+}

@@ -2,5 +2,12 @@
     padding: 1.5rem;
     box-shadow: 0 1px 3px var(--bg-section);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+    @media screen and (min-width:960px) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
