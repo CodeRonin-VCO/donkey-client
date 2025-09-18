@@ -1,10 +1,10 @@
-import styles from "./feed-cards.module.css";
+import styles from "./cards-publish.module.css";
 import logoDonkey from "./../../assets/logo-donkey-profile.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceSmile, faImage, faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 
-export default function FeedCards() {
+export default function PublishCards() {
     // todo: rendre l'affichage dynamique ← mockup
 
     return (

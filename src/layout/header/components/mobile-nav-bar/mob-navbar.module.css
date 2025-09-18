@@ -128,6 +128,7 @@
 
         .navlink {
             color: var(--text);
+            font-size: clamp(2rem,   2.3rem + 0.6vw, 3.2rem);
             text-decoration: none;
 
             &:hover {

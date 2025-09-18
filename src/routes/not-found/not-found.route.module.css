@@ -18,6 +18,7 @@
     &>img {
         height: clamp(225px, 37.5vw, 525px);
         border-radius: .8rem;
+        aspect-ratio: 1 / 1;
     }
 }
 

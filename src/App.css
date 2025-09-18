@@ -58,3 +58,14 @@ button {
         font-size: clamp(1.6rem, 1.8rem + 0.4vw, 2.6rem);
     }
 }
+
+img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    height: 100%;
+}
+
+textarea {
+    resize: none;
+    overflow: hidden;
+}

@@ -1,0 +1,34 @@
+.container_list {
+    margin: 1.6rem 0;
+    display: flex;
+    gap: 1.6rem;
+}
+
+.cards_head {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
+    .avatar {
+        width: 5rem;
+        height: 5rem;
+        margin: 0;
+        border: 2px solid var(--bg-section);
+
+        @media screen and (min-width:960px) {
+            margin-right: 2rem;
+        }
+    }
+
+    .avatar,
+    img {
+        border-radius: 50%;
+    }
+}
+
+.comments {
+    padding: 1rem 2rem;
+    color: var(--text);
+    background-color: var(--bg-section);
+    border-radius: 3.2rem;
+}
