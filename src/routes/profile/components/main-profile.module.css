@@ -1,0 +1,18 @@
+.main {
+    flex-grow: 1;
+}
+
+.wrapper {
+    max-width: 1100px;
+    min-width: 400px;
+    padding: 2%;
+    margin: 3rem auto;
+}
+
+.color {
+    color: #f8f9fa71;
+}
+
+.hgroup {
+    text-align: center;
+}

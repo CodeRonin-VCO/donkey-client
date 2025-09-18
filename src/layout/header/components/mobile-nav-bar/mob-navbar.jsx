@@ -18,7 +18,7 @@ export default function MobileNavBar() {
                 <div className={`${styles.close_menu} ${menuOpen ? styles.active : ""}`} onClick={handleCloseMenuBurger}><FontAwesomeIcon icon={faXmark} /></div>
                 <ul className={styles.menu_wrapper + " " + styles.menu_mobile}>
                     <li><Link to="/" className={styles.navlink}>Home</Link></li>
-                    <li><Link to="/contact" className={styles.navlink}>Profil</Link></li>
+                    <li><Link to="/contact" className={styles.navlink}>Profile</Link></li>
                     <li><Link to="/not-found" className={styles.navlink}>Disconnect</Link></li>
                 </ul>
             </nav>

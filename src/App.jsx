@@ -5,6 +5,7 @@ import NotFoudPage from './routes/not-found/not-found.route.jsx';
 import DisconnectPage from './routes/disconnect/disconnect.route.jsx';
 import ForgotPasswordPage from './routes/forgot-pwd/forgot-pwd.route.jsx';
 import FeedPage from './routes/feed/feed.route.jsx';
+import ProfilPage from './routes/profile/profile.route.jsx';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
             <Routes>
                 <Route index element={<HomePage />} />
                 <Route path='/feed' element={<FeedPage />} />
+                <Route path='/profile' element={<ProfilPage />} />
                 <Route path='/disconnected' element={<DisconnectPage />} />
                 <Route path='/forgot-pwd' element={<ForgotPasswordPage />} />
                 <Route path='*' element={<NotFoudPage />} />
