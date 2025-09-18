@@ -3,7 +3,7 @@ import styles from "./bio.module.css";
 import { faCalendar, faCamera, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import logoDonkey from "./../../assets/logo-donkey-profile.png";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 
 
 export default function BioComponent() {
@@ -36,6 +36,34 @@ export default function BioComponent() {
         };
     }
 
+    // Manage form
+    async function onSubmitForm(prevState, formData) {
+        const requiredFields = ["firstname", "lastname", "email", "bio", "loc"];
+        let data = {};
+
+        const errors = {};
+
+        for (const field of requiredFields) {
+            // Get data
+            const value = formData.get(field);
+            data[field] = value;
+
+            // Add errors
+            if (!value) {
+                errors[field] = "This field must be completed.";
+            };
+        };
+
+        if (Object.keys(errors).length > 0) {
+            return { data: null, errors, message: "Invalid data. All fields are required." }
+        };        
+
+        return { data: data, message: "Your form has been successfully submitted. 🎉", errors }
+    }
+
+    // Submit ActionState
+    const initialData = { data: null, message: null, errors: {} }
+    const [state, handleform, isPending] = useActionState(onSubmitForm, initialData)
 
     return (
         <div className={styles.wrapper}>
@@ -113,18 +141,18 @@ export default function BioComponent() {
 
                 {
                     isModified
-                        ? <form action="" className={styles.form_info}>
+                        ? <form action={handleform} className={styles.form_info}>
                             <div className={styles.input_group}>
                                 <label htmlFor="firstname">Firstname:</label>
-                                <input type="text" id="firstname" placeholder="Ex.: Jean" />
+                                <input type="text" id="firstname" name="firstname" placeholder="Ex.: Jean" />
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="lastname">Lastname:</label>
-                                <input type="text" id="lastname" placeholder="Ex/: Peuplu" />
+                                <input type="text" id="lastname" name="lastname" placeholder="Ex/: Peuplu" />
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="email">Email:</label>
-                                <input type="email" id="email" placeholder="Ex.: jean@peuplu.com" />
+                                <input type="email" id="email" name="email" placeholder="Ex.: jean@peuplu.com" />
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="bio">Bio</label>
@@ -132,7 +160,7 @@ export default function BioComponent() {
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="loc">Localisation</label>
-                                <input type="text" id="loc" placeholder="Your city, country" />
+                                <input type="text" id="loc" name="loc" placeholder="Your city, country" />
                             </div>
                             <div className={styles.btn_container}>
                                 <button type="submit" className={styles.btn_save}>Save</button>
