@@ -28,7 +28,7 @@
     }
 
     input:focus {
-        outline: .1rem solid var(--tonal-pink);
+        outline: .2rem solid var(--tonal-pink);
     }
 
     label {
@@ -47,7 +47,7 @@
     left: 1.2rem;
     padding: .2rem .8rem;
     color: var(--tonal-pink);
-    transform: translateY(-5.5rem);
+    transform: translateY(-6rem);
 }
 
 .input_full+label {

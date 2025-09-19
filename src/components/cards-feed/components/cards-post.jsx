@@ -6,19 +6,17 @@ import { faVideo, faHeart as fasHeart } from "@fortawesome/free-solid-svg-icons"
 library.add(farHeart, fasHeart, faComment, faFaceSmile, faShareFromSquare, faVideo);
 // ---- Fin import fontAwesome ----
 
-
-import styles from "./cards-posts.module.css";
-import logoDonkey from "./../../assets/logo-donkey-profile.png";
-import imageExample from "./../../assets/logo-donkey-langue.png";
+import styles from "./cards-post.module.css";
 import { useState } from "react";
-import CommentsCards from "../cards-comment/card-comment.jsx";
-import ListComments from "../cards-list-comments/list-comments.jsx";
+import CommentsCards from "./../../cards-comment/card-comment.jsx";
+import ListComments from "./../../cards-list-comments/list-comments.jsx";
 
 
-export default function FeedCards() {
-    // todo: rendre l'affichage dynamique ← mockup
+export default function PostsCards({ post }) {
     const [isLoved, setIsLoved] = useState(false);
     const [isCommented, setIsCommented] = useState(false);
+
+    const { author, content, images, createdAt } = post;
 
     function onLovedElement() {
         if (!isLoved) {
@@ -38,15 +36,15 @@ export default function FeedCards() {
     return (
         <article className={styles.cards}>
             <div className={styles.cards_head}>
-                <div className={styles.avatar}><img src={logoDonkey} alt="logo-user" /></div>
+                <div className={styles.avatar}><img src={author.avatar} alt={`logo-${author.firstname}`} /></div>
                 <div>
-                    <h6 className={styles.color_title}>Donkey</h6>
-                    <p className={styles.color}><small>4 hours ago</small></p>
+                    <h6 className={styles.color_title}>{author.firstname}</h6>
+                    <p className={styles.color}><small>{createdAt}</small></p>
                 </div>
             </div>
             <div className={styles.container_content}>
-                <p className={styles.txt_content}>Here is my text content. I just like this photo:</p>
-                <img src={imageExample} alt="example image" />
+                <p className={styles.txt_content}>{content}</p>
+                {images?.length > 0 && <img src={images[0]} alt="post media" />}
             </div>
             <div className={styles.container_options}>
                 <div className={styles.container_btn}>
@@ -69,12 +67,12 @@ export default function FeedCards() {
 
                 </div>
                 {
-                    isCommented
-                        ? <div className={styles.section_comments}>
+                    isCommented && (
+                        <div className={styles.section_comments}>
                             <ListComments />
                             <CommentsCards />
                         </div>
-                        : ""
+                    )
                 }
             </div>
         </article>

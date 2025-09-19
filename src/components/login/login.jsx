@@ -2,17 +2,13 @@ import styles from "./login.module.css";
 import { useActionState, useState } from "react";
 import logoDonkeyProfile from "./../../assets/logo-donkey-profile.png";
 import { Link } from "react-router";
+import useAuth from "../../hooks/useAuth.js";
 
-// todo: connecter au server
-// ==== Fake server ====
-async function fakeSendToServer(data) {
-    await (new Promise((resolve) => setTimeout(resolve, 1_000)));
-    console.log('Data sent!');
-};
+export default function LoginPage({ switchForm }) {
+    // Manage auth
+    const { isAuthenticated, fetchLogin, fetchLogout } = useAuth();
+    const [error, setError] = useState("");
 
-
-
-export default function LoginPage({ isConnected, setIsConnected, checkUserDB, switchForm }) {
     // Styling input
     const [emptyFields, setEmptyFields] = useState({
         email: true,
@@ -22,17 +18,22 @@ export default function LoginPage({ isConnected, setIsConnected, checkUserDB, sw
         setEmptyFields(prev => ({ ...prev, [field]: e.target.value === "" }));
     };
 
-    // Manage status : connected/disconnected
+    // Manage status disconnected
     const [logoutMsg, setLogoutMsg] = useState("");
-    const handleLogout = () => {
-        setIsConnected(false);
-        setLogoutMsg("You have been disconnected.");
+    const handleLogout = async () => {
+        try {
+            await fetchLogout();
+            setLogoutMsg("You have been disconnected.");
+
+        } catch (error) {
+            setError("Error during logout.")
+        }
     };
 
     // Styling input
     const [password, setPassword] = useState("");
 
-    // Manage form
+    // ==== Manage form ====
     async function onSubmitForm(prevState, formData) {
         const data = {
             email: formData.get("email"),
@@ -48,31 +49,34 @@ export default function LoginPage({ isConnected, setIsConnected, checkUserDB, sw
             return { data: null, errors, message: "Invalid data. All fields are required." }
         }
 
-        const result = checkUserDB({
-            inusername: data.email,
-            inpassword: data.password
-        });
+        try {
+            await fetchLogin(data.email, data.password);
 
-        if (result.errorCheck) {
-            return { data: null, errors, message: result.msg };
-        }
+            // Reset the logout message
+            setLogoutMsg("")
 
-        // todo: connecter au server?
-        // Connection to fake server
-        await fakeSendToServer(data);
+            // Styling input
+            setEmptyFields({
+                email: true,
+                password: true,
+            });
 
-        // Reset the logout message
-        setLogoutMsg("")
+            setPassword("");
 
-        // Styling input
-        setEmptyFields({
-            email: true,
-            password: true,
-        });
+            return {
+                data: data,
+                message: `Your form has been successfully submitted. 🎉`,
+                errors: {}
+            };
 
-        setPassword("");
+        } catch (error) {
 
-        return { data: data, message: "Your form has been successfully submitted. 🎉", errors }
+            return {
+                data: null,
+                errors: {},
+                message: error.message || "Connection failed. Check your credentials."
+            }
+        };
     }
 
     // Submit ActionState
@@ -114,7 +118,7 @@ export default function LoginPage({ isConnected, setIsConnected, checkUserDB, sw
                 <Link to="/forgot-pwd">Forgot password?</Link>
             </div>
 
-            <button type="submit" disabled={isPending}>{(isPending || isConnected) ? "Submitting..." : "Log in"}</button>
+            <button type="submit" disabled={isPending}>{(isPending) ? "Submitting..." : "Log in"}</button>
 
             {/* //? Afficher msg si connexion validée */}
             {logoutMsg
@@ -126,8 +130,9 @@ export default function LoginPage({ isConnected, setIsConnected, checkUserDB, sw
                 )
             }
 
+            {/* //todo: superflu? */}
             {/* //? Bouton déconnexion */}
-            {isConnected && (
+            {isAuthenticated && (
                 <button onClick={handleLogout}>Se déconnecter</button>
             )}
 

@@ -9,6 +9,29 @@
     margin: 3rem auto;
 }
 
+.title_username {
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 2s steps(20, end) forwards;
+}
+
+.name {
+    color: var(--tonal-yellow);
+}
+
 .color {
     color: #f8f9fa71;
+}
+
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
 }

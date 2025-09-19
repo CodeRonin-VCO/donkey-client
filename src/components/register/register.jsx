@@ -2,18 +2,12 @@ import styles from "./register.module.css";
 import { useActionState, useState } from "react";
 import { nanoid } from "nanoid";
 import logoDonkey from "./../../assets/logo-donkey.jpg";
-
-// todo: connecter au server
-// ==== Fake server ====
-async function fakeSendToServer(data) {
-    await (new Promise((resolve) => setTimeout(resolve, 1_000)));
-    console.log('Data sent!');
-};
-
-
-
+import useAuth from "../../hooks/useAuth.js";
 
 export default function RegisterPage({ switchForm }) {
+    // Manage auth
+    const { fetchRegister, fetchLogin } = useAuth();
+
     // Styling input
     const [emptyFields, setEmptyFields] = useState({
         firstname: true,
@@ -42,10 +36,10 @@ export default function RegisterPage({ switchForm }) {
         }
     }
 
-    // Manage form
+    // ==== Manage form ====
     async function onSubmitForm(prevState, formData) {
         const requiredFields = ["firstname", "lastname", "email", "password"];
-        const data = { userID: nanoid() };
+        const data = {};
 
 
         const errors = {};
@@ -68,25 +62,39 @@ export default function RegisterPage({ switchForm }) {
             return { data: null, errors, message: "Invalid data. All fields are required." }
         };
 
-        // Validate the password before sending the form
-        if (field === "password" && !validatePassword(value)) {
-            errors.password = "The password must contain at least 8 characters, one uppercase letter, one number, and one special character.";
-        }
+        try {
+            console.log("Data sent to backend:", data);
+            const result = await fetchRegister(data.firstname, data.lastname, data.email, data.password);
 
-        // todo: connecter au server?
-        // Connection to fake server
-        await fakeSendToServer(data);
+            // Styling input
+            setEmptyFields({
+                firstname: true,
+                lastname: true,
+                email: true,
+                password: true,
+            });
+            setPassword("");
+            setPasswordError("");
 
-        // Styling input
-        setEmptyFields({
-            firstname: true,
-            lastname: true,
-            email: true,
-            password: true,
-        });
+            // Go to login page
+            await fetchLogin(data.email, data.password);
 
-        return { data: data, message: "Your form has been successfully submitted. 🎉", errors }
-    }
+
+            return {
+                data: result.user,
+                message: "Your account has been created successfully 🎉",
+                errors: {}
+            };
+
+        } catch (error) {
+            
+            return {
+                data: null,
+                errors: {},
+                message: error.message || "Registration failed."
+            };
+        };
+    };
 
     // Submit ActionState
     const initialData = { data: null, message: null, errors: {} }

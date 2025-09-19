@@ -4,6 +4,8 @@ import { faCalendar, faCamera, faTrashAlt } from "@fortawesome/free-regular-svg-
 import logoDonkey from "./../../assets/logo-donkey-profile.png";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useActionState, useState } from "react";
+import { useAtom } from "jotai";
+import { userAtom } from "../../stores/auth.stores.js";
 
 
 export default function BioComponent() {
@@ -12,6 +14,9 @@ export default function BioComponent() {
     const [isModified, setIsModified] = useState(false);
     const [isBanner, setIsBanner] = useState(false);
     const [isAvatar, setIsAvatar] = useState(false);
+    const [avatarFileName, setAvatarFileName] = useState("Upload avatar 📎");
+    const [bannerFileName, setBannerFileName] = useState("Upload banner 📎");
+    const [user] = useAtom(userAtom);
 
     function onModifyInfo() {
         if (!isModified) {
@@ -36,6 +41,20 @@ export default function BioComponent() {
         };
     }
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        const inputName = e.target.name;
+
+        if (file) {
+            if (inputName === "avatar") {
+                setAvatarFileName(file.name);
+            } else if (inputName === "banner") {
+                setBannerFileName(file.name);
+            }
+        }
+    };
+
+
     // Manage form
     async function onSubmitForm(prevState, formData) {
         const requiredFields = ["firstname", "lastname", "email", "bio", "loc"];
@@ -56,7 +75,7 @@ export default function BioComponent() {
 
         if (Object.keys(errors).length > 0) {
             return { data: null, errors, message: "Invalid data. All fields are required." }
-        };        
+        };
 
         return { data: data, message: "Your form has been successfully submitted. 🎉", errors }
     }
@@ -71,19 +90,7 @@ export default function BioComponent() {
                 <button type="button" className={styles.btn_add_pic} onClick={() => onModifyingBanner()}>
                     <FontAwesomeIcon icon={faCamera} />
                 </button>
-                {
-                    isBanner && <div className={styles.popup}>
-                        <h6>Upload your new banner :</h6>
-                        <div className={styles.container_input}>
-                            <label htmlFor="file" className={styles.custom_file_upload}>Upload file : Browse 📎</label>
-                            <input type="file" id="file" name="file" />
-                        </div>
-                        <div className={styles.btn_container}>
-                            <button type="submit" className={styles.btn_save}>Save</button>
-                            <button type="button" className={styles.btn_cancel} onClick={() => onModifyingBanner()}>Cancel</button>
-                        </div>
-                    </div>
-                }
+
             </div>
             <div className={styles.user_info}>
                 <div className={styles.profile}>
@@ -94,22 +101,9 @@ export default function BioComponent() {
                                 <button type="button" className={styles.btn_add_pic + " " + styles.add_pic_bottom} onClick={() => onModifyingAvatar()}>
                                     <FontAwesomeIcon icon={faCamera} />
                                 </button>
-                                {
-                                    isAvatar && <div className={styles.popup}>
-                                        <h6>Upload your new avatar :</h6>
-                                        <div className={styles.container_input}>
-                                            <label htmlFor="file" className={styles.custom_file_upload}>Upload file : Browse 📎</label>
-                                            <input type="file" id="file" name="file" />
-                                        </div>
-                                        <div className={styles.btn_container}>
-                                            <button type="submit" className={styles.btn_save}>Save</button>
-                                            <button type="button" className={styles.btn_cancel} onClick={() => onModifyingAvatar()}>Cancel</button>
-                                        </div>
-                                    </div>
-                                }
                             </div>
                             <hgroup className={styles.hgroup}>
-                                <h6 className={styles.color_title}>Donkey</h6>
+                                <h6 className={styles.color_title}>{user?.firstname}</h6>
                                 <p className={styles.color_transp}><small>@current_user</small></p>
                             </hgroup>
                         </div>
@@ -176,6 +170,34 @@ export default function BioComponent() {
                         </div>
                 }
             </div>
+
+            {/* // ==== Popup ==== */}
+            {
+                isAvatar && <div className={styles.popup}>
+                    <h6>Upload your new avatar :</h6>
+                    <div className={styles.container_input}>
+                        <label htmlFor="avatar-upload" className={styles.custom_file_upload}>{avatarFileName}</label>
+                        <input type="file" id="avatar-upload" name="avatar" onChange={handleFileChange} />
+                    </div>
+                    <div className={styles.btn_container}>
+                        <button type="submit" className={styles.btn_save}>Save</button>
+                        <button type="button" className={styles.btn_cancel} onClick={() => onModifyingAvatar()}>Cancel</button>
+                    </div>
+                </div>
+            }
+            {
+                isBanner && <div className={styles.popup}>
+                    <h6>Upload your new banner :</h6>
+                    <div className={styles.container_input}>
+                        <label htmlFor="banner-upload" className={styles.custom_file_upload}>{bannerFileName}</label>
+                        <input type="file" id="banner-upload" name="banner" onChange={handleFileChange} />
+                    </div>
+                    <div className={styles.btn_container}>
+                        <button type="submit" className={styles.btn_save}>Save</button>
+                        <button type="button" className={styles.btn_cancel} onClick={() => onModifyingBanner()}>Cancel</button>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

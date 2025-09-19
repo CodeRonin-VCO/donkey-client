@@ -17,6 +17,7 @@
         height: 5rem;
         margin-right: 2rem;
         border: 2px solid var(--bg-section);
+        overflow: hidden;
     }
 
     .avatar,

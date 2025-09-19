@@ -6,4 +6,4 @@
 ## Dépendances installées
 - react-router
 - FontAwesomeIcon
-
+- jotai
