@@ -16,7 +16,7 @@ export default function PostsCards({ post }) {
     const [isLoved, setIsLoved] = useState(false);
     const [isCommented, setIsCommented] = useState(false);
 
-    const { author, content, images, createdAt } = post;
+    const { author, content, images, videos, createdAt } = post;
 
     function onLovedElement() {
         if (!isLoved) {
@@ -45,6 +45,8 @@ export default function PostsCards({ post }) {
             <div className={styles.container_content}>
                 <p className={styles.txt_content}>{content}</p>
                 {images?.length > 0 && <img src={images[0]} alt="post media" />}
+                {videos?.length > 0 && <video src={videos[0]} autoPlay muted></video>}
+                
             </div>
             <div className={styles.container_options}>
                 <div className={styles.container_btn}>

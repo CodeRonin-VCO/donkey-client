@@ -1,15 +1,16 @@
 import usePosts from "../../hooks/usePosts.js";
 import styles from "./cards-feed.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PostsCards from "./components/cards-post.jsx";
 import { useAtom } from "jotai";
-import { tokenAtom } from "../../stores/auth.stores.js";
+import { tokenAtom, userAtom } from "../../stores/auth.stores.js";
 
 
 
 export default function FeedCards() {
     const { posts, fetchGetPosts } = usePosts();
     const [token] = useAtom(tokenAtom)
+    const [user] = useAtom(userAtom);
 
     useEffect(() => {
         if (token) {
@@ -22,7 +23,12 @@ export default function FeedCards() {
         <>
             {posts?.length > 0 ? (
                 posts.map(post => (
-                    <PostsCards key={post._id} post={post} />
+                    <PostsCards
+                        key={post._id}
+                        post={post}
+                        token={token}
+                        currentUserId={user?._id}
+                    />
                 ))
             ) : (
                 <p className={styles.empty}>Aucun post à afficher.</p>

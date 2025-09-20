@@ -1,15 +1,25 @@
-
-
 const baseUrl = "http://localhost:8008/api/posts";
 
-export const createPost = async ({ author, content, images }, token) => {
+export const createPost = async ({ author, content }, token, photo, videos) => {
+    const formData = new FormData();
+    formData.append("author", author);
+    formData.append("content", content);
+
+    photo.forEach(file => {
+        formData.append("images", file);
+    });
+
+    videos.forEach(file => {
+        formData.append("videos", file);
+    });
+
+
     const response = await fetch(`${baseUrl}`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ author, content, images }),
+        body: formData,
     });
 
     if (!response.ok) {

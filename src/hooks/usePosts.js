@@ -10,13 +10,22 @@ export default function usePosts() {
     const [token] = useAtom(tokenAtom);
 
 
-    const fetchCreatePosts = async ({ author, content, images }) => {
+    const fetchCreatePosts = async ({ author, content }, photo, videos) => {
 
         try {
-            const result = await postsService.createPost({ author, content, images }, token);
-            setPosts(prev => [result.post, ...prev]);
+            const result = await postsService.createPost({ author, content }, token, photo, videos);
 
-            return { success: true }
+            // Manage image url
+            const correctedPost = {
+                ...result.post,
+                images: result.post.images.map(img =>
+                    img.startsWith('http') ? img : `http://localhost:8008${img}`
+                ),
+                videos: result.post.videos.map(vid => vid.startsWith('http') ? vid : `http://localhost:8008${vid}`)
+            };
+            setPosts(prev => [correctedPost, ...prev]);
+
+            return { success: true, post: result.post }
 
         } catch (error) {
             throw error;

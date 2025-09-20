@@ -27,15 +27,15 @@ export default function PublishCards() {
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
         const fileNames = files.map(file => file.name);
-        const inputType = e.target.name; // "photo", "video", etc.
+        const inputType = e.target.name;
 
         switch (inputType) {
             case "photo":
-                setPhoto(fileNames);
+                setPhoto(files);
                 setPhotoFileName(fileNames.join(", "));
                 break;
             case "video":
-                setVideo(fileNames);
+                setVideo(files);
                 setVideoFileName(fileNames.join(", "));
                 break;
             default:
@@ -45,18 +45,19 @@ export default function PublishCards() {
         setPopupType(null);
     };
 
-
     const handlePublish = async () => {
         try {
             const result = await fetchCreatePosts({
                 author: user._id,
                 content: content + (caption ? `\n\n${caption}` : ""),
-                images: photo
-            });
+            }, photo, video);
 
             if (result.success) {
                 setContent("");
                 setPhoto([]);
+                setPhotoFileName("Choose a photo")
+                setVideo([]);
+                setVideoFileName("Choose a video")
             };            
 
         } catch (error) {
@@ -86,8 +87,6 @@ export default function PublishCards() {
 
         setPopupType(null);
     };
-
-    
 
     return (
         <article className={styles.cards + " " + styles.color}>
@@ -130,8 +129,8 @@ export default function PublishCards() {
                         type="button"
                         className={styles.btn_cancel}
                         onClick={() => {
-                            setPhoto([]);
-                            setPhotoFileName("Choose a photo");
+                            setVideo([]);
+                            setVideoFileName("Choose a photo");
                         }}
                     >
                         X
@@ -192,7 +191,8 @@ export default function PublishCards() {
                             id="video-upload"
                             name="video"
                             accept="video/*"
-                            multiple onChange={handleFileChange}
+                            multiple 
+                            onChange={handleFileChange}
                         />
                     </div>
                     <div className={styles.btn_container}>
