@@ -46,11 +46,12 @@ export default function PublishCards() {
     };
 
     const handlePublish = async () => {
+        const contentToSend = content.trim() === "" && (photo.length > 0 || video.length > 0)
+            ? " "
+            : content;
+
         try {
-            const result = await fetchCreatePosts({
-                author: user._id,
-                content: content + (caption ? `\n\n${caption}` : ""),
-            }, photo, video);
+            const result = await fetchCreatePosts(contentToSend, photo, video);
 
             if (result.success) {
                 setContent("");
@@ -58,7 +59,7 @@ export default function PublishCards() {
                 setPhotoFileName("Choose a photo")
                 setVideo([]);
                 setVideoFileName("Choose a video")
-            };            
+            };
 
         } catch (error) {
             console.error("Error during publication:", error);
@@ -66,12 +67,11 @@ export default function PublishCards() {
     }
 
     // Emoji
-    const [caption, setCaption] = useState("");
     const insertEmojiAtCursor = (emoji) => {
         const textarea = textareaRef.current;
         if (!textarea) return;
 
-        textarea.focus(); // ← force le focus
+        textarea.focus();
 
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
@@ -91,7 +91,7 @@ export default function PublishCards() {
     return (
         <article className={styles.cards + " " + styles.color}>
             <div className={styles.cards_head}>
-                <div className={styles.avatar}><img src={logoDonkey} alt="logo-user" /></div>
+                <div className={styles.avatar}><img src={user?.avatar ? user?.avatar : logoDonkey} alt="logo-user" /></div>
                 <div>
                     <h6 className={styles.color_title}>{user?.firstname}</h6>
                     <p><small>Share something...</small></p>
@@ -191,7 +191,7 @@ export default function PublishCards() {
                             id="video-upload"
                             name="video"
                             accept="video/*"
-                            multiple 
+                            multiple
                             onChange={handleFileChange}
                         />
                     </div>

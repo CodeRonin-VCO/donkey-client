@@ -23,6 +23,7 @@
     img {
         border-radius: 50%;
         aspect-ratio: 1/1;
+        object-fit: contain;
     }
 
     .color_title {
@@ -49,6 +50,7 @@
 
 .media_caption {
     display: flex;
+    overflow: hidden;
 
     button {
         width: fit-content;

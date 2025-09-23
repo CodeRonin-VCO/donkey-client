@@ -27,7 +27,6 @@ export default function FeedCards() {
                         key={post._id}
                         post={post}
                         token={token}
-                        currentUserId={user?._id}
                     />
                 ))
             ) : (

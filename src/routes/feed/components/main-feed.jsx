@@ -9,8 +9,8 @@ export default function MainFeedPage() {
 
     return (
         <main className={styles.main}>
+            <h1 className={styles.title_username}>Welcome <span className={styles.name}>{user?.firstname} !</span></h1>
             <div className={styles.wrapper}>
-                <h1 className={styles.title_username}>Welcome <span className={styles.name}>{user?.firstname} !</span></h1>
                 <h2>News feed</h2>
                 <h6 className={styles.color}>Discover the latest posts from your network</h6>
                 <PublishCards />

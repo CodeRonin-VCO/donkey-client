@@ -3,20 +3,37 @@ import styles from "./bio.module.css";
 import { faCalendar, faCamera, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import logoDonkey from "./../../assets/logo-donkey-profile.png";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { userAtom } from "../../stores/auth.stores.js";
+import { tokenAtom, userAtom } from "../../stores/auth.stores.js";
+import useUser from "../../hooks/useUser.js";
+import { useNavigate } from "react-router";
 
 
 export default function BioComponent() {
-    // todo: affichage dynamique !!
-
     const [isModified, setIsModified] = useState(false);
     const [isBanner, setIsBanner] = useState(false);
     const [isAvatar, setIsAvatar] = useState(false);
     const [avatarFileName, setAvatarFileName] = useState("Upload avatar 📎");
     const [bannerFileName, setBannerFileName] = useState("Upload banner 📎");
     const [user] = useAtom(userAtom);
+    const [token] = useAtom(tokenAtom);
+    const { fetchGetPersonalData, fetchChangePersonalData, fetchDeletePersonalData, uploadUserAvatar, uploadUserBanner } = useUser();
+    const navigate = useNavigate();
+
+    // Load data
+    useEffect(() => {
+        const loadUserData = async () => {
+            try {
+                await fetchGetPersonalData();
+
+            } catch (error) {
+                console.error("Failed to fetch personal data", error);
+            };
+        };
+        loadUserData();
+
+    }, [token]);
 
     function onModifyInfo() {
         if (!isModified) {
@@ -32,14 +49,15 @@ export default function BioComponent() {
         } else {
             setIsBanner(false)
         };
-    }
+    };
+
     function onModifyingAvatar() {
         if (!isAvatar) {
             setIsAvatar(true)
         } else {
             setIsAvatar(false)
         };
-    }
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -54,22 +72,55 @@ export default function BioComponent() {
         }
     };
 
+    // Upload banner
+    const handleBannerUpload = async () => {
+        if (!bannerFileName || bannerFileName === "Upload banner 📎") return;
 
-    // Manage form
+        const fileInput = document.getElementById("banner-upload");
+        const file = fileInput?.files?.[0];
+        if (!file) return;
+
+        try {
+            await uploadUserBanner(file);
+            setIsBanner(false);
+            setBannerFileName("Upload banner 📎");
+        } catch (error) {
+            console.error(error.message || "Failed to upload banner");
+        }
+    };
+
+    // Upload avatar
+    const handleAvatarUpload = async () => {
+        if (!avatarFileName || avatarFileName === "Upload avatar 📎") return;
+
+        const fileInput = document.getElementById("avatar-upload");
+        const file = fileInput?.files?.[0];
+        if (!file) return;
+
+        try {
+            await uploadUserAvatar(file);
+            setIsAvatar(false);
+            setAvatarFileName("Upload avatar 📎");
+        } catch (error) {
+            console.error(error.message || "Failed to upload avatar");
+        }
+    };
+
+    // Manage form → upload text info
     async function onSubmitForm(prevState, formData) {
-        const requiredFields = ["firstname", "lastname", "email", "bio", "loc"];
-        let data = {};
-
+        const requiredFields = ["firstname", "lastname", "bio", "loc"];
+        let updates = {};
         const errors = {};
 
         for (const field of requiredFields) {
             // Get data
             const value = formData.get(field);
-            data[field] = value;
 
             // Add errors
             if (!value) {
                 errors[field] = "This field must be completed.";
+            } else {
+                updates[field] = value;
             };
         };
 
@@ -77,16 +128,46 @@ export default function BioComponent() {
             return { data: null, errors, message: "Invalid data. All fields are required." }
         };
 
-        return { data: data, message: "Your form has been successfully submitted. 🎉", errors }
-    }
+        try {
+            await fetchChangePersonalData(updates);
+            await fetchGetPersonalData();
+            setIsModified(false);
+
+            return { data: updates, message: "Your profile has been successfully updated. 🎉", errors: {} }
+
+        } catch (error) {
+            return { data: null, errors: {}, message: error.message || "Failed to update profile." };
+        };
+    };
+
+    // Delete account
+    async function handleDeleteAccount() {
+        const confirmation = window.confirm("Are you sure you want to delete your account? This action is irreversible.")
+        if (!confirmation) return;
+
+        try {
+            await fetchDeletePersonalData();
+            navigate("/login");
+
+        } catch (error) {
+            console.error("Failed to delete account.", error.message);
+        };
+    };
 
     // Submit ActionState
     const initialData = { data: null, message: null, errors: {} }
     const [state, handleform, isPending] = useActionState(onSubmitForm, initialData)
 
+    // Format date
+    const formattedCreatedAt = new Date(user?.createdAt).toLocaleString("en-GB", {
+        year: "numeric",
+        month: "long",
+    });
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.banner}>
+                {user?.banner && <img src={user?.banner} alt="No banner" />}
                 <button type="button" className={styles.btn_add_pic} onClick={() => onModifyingBanner()}>
                     <FontAwesomeIcon icon={faCamera} />
                 </button>
@@ -97,14 +178,14 @@ export default function BioComponent() {
                     <div className={styles.personnal_data}>
                         <div className={styles.cards_head}>
                             <div className={styles.avatar}>
-                                <img src={logoDonkey} alt="logo-user" />
+                                <img src={user?.avatar || logoDonkey} alt="logo-user" />
                                 <button type="button" className={styles.btn_add_pic + " " + styles.add_pic_bottom} onClick={() => onModifyingAvatar()}>
                                     <FontAwesomeIcon icon={faCamera} />
                                 </button>
                             </div>
                             <hgroup className={styles.hgroup}>
-                                <h6 className={styles.color_title}>{user?.firstname}</h6>
-                                <p className={styles.color_transp}><small>@current_user</small></p>
+                                <h6 className={styles.color_title}>{user?.firstname + " " + user?.lastname}</h6>
+                                <p className={styles.color_transp}><small>{user?.email || "@current_user"}</small></p>
                             </hgroup>
                         </div>
                     </div>
@@ -113,23 +194,23 @@ export default function BioComponent() {
                             <FontAwesomeIcon icon={faPencil} />
                             <span className={styles.content_type}>Modify profile</span>
                         </button>
-                        <button type="button" className={styles.btn_delete_profile}>
+                        <button type="button" className={styles.btn_delete_profile} onClick={handleDeleteAccount}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                         </button>
                     </div>
                 </div>
                 <div className={styles.social_info}>
                     <div>
-                        <div className={styles.number}>0</div>
+                        <div className={styles.number}>{user?.postsCount ?? 0}</div>
                         <div className={styles.color_transp}>Posts</div>
                     </div>
                     <div>
-                        <div className={styles.number}>42</div>
-                        <div className={styles.color_transp}>Subscribers</div>
+                        <div className={styles.number}>{user?.friendsCount ?? 0}</div>
+                        <div className={styles.color_transp}>Friends</div>
                     </div>
                     <div>
-                        <div className={styles.number}>38</div>
-                        <div className={styles.color_transp}>Subscriptions</div>
+                        <div className={styles.number}>{user?.heartsGivenCount ?? 0}</div>
+                        <div className={styles.color_transp}>Hearts given</div>
                     </div>
                 </div>
 
@@ -138,34 +219,33 @@ export default function BioComponent() {
                         ? <form action={handleform} className={styles.form_info}>
                             <div className={styles.input_group}>
                                 <label htmlFor="firstname">Firstname:</label>
-                                <input type="text" id="firstname" name="firstname" placeholder="Ex.: Jean" />
+                                <input type="text" id="firstname" name="firstname" placeholder="Ex.: Jean" defaultValue={user?.firstname || ""} />
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="lastname">Lastname:</label>
-                                <input type="text" id="lastname" name="lastname" placeholder="Ex/: Peuplu" />
-                            </div>
-                            <div className={styles.input_group}>
-                                <label htmlFor="email">Email:</label>
-                                <input type="email" id="email" name="email" placeholder="Ex.: jean@peuplu.com" />
+                                <input type="text" id="lastname" name="lastname" placeholder="Ex.: Peuplu" defaultValue={user?.lastname || ""} />
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="bio">Bio</label>
-                                <textarea name="bio" id="bio" placeholder="Tell us about yourself" rows={3}></textarea>
+                                <textarea name="bio" id="bio" placeholder="Tell us about yourself" rows={3} defaultValue={user?.bio || ""}></textarea>
                             </div>
                             <div className={styles.input_group}>
                                 <label htmlFor="loc">Localisation</label>
-                                <input type="text" id="loc" name="loc" placeholder="Your city, country" />
+                                <input type="text" id="loc" name="loc" placeholder="Your city, country" defaultValue={user?.loc || ""} />
                             </div>
                             <div className={styles.btn_container}>
-                                <button type="submit" className={styles.btn_save}>Save</button>
+                                <button type="submit" className={styles.btn_save}>{isPending ? "Saving..." : "Save"}</button>
                                 <button type="button" className={styles.btn_cancel} onClick={() => onModifyInfo()}>Cancel</button>
                             </div>
                         </form>
                         : <div className={styles.connection_info}>
-                            <h6>User connected.</h6>
-                            <p className={styles.color_transp}>
+                            <h6>User bio :</h6>
+                            <p className={styles.color_transp}>{user?.bio || "No bio for the moment"}</p>
+                            <h6>User loc :</h6>
+                            <p className={styles.color_transp}>{user?.loc || "No location."}</p>
+                            <p className={styles.color_transp + " " + styles.membersince}>
                                 <FontAwesomeIcon icon={faCalendar} />
-                                Member since January 2024
+                                Member since {formattedCreatedAt}
                             </p>
                         </div>
                 }
@@ -180,7 +260,7 @@ export default function BioComponent() {
                         <input type="file" id="avatar-upload" name="avatar" onChange={handleFileChange} />
                     </div>
                     <div className={styles.btn_container}>
-                        <button type="submit" className={styles.btn_save}>Save</button>
+                        <button type="submit" className={styles.btn_save} onClick={handleAvatarUpload}>Save</button>
                         <button type="button" className={styles.btn_cancel} onClick={() => onModifyingAvatar()}>Cancel</button>
                     </div>
                 </div>
@@ -193,7 +273,7 @@ export default function BioComponent() {
                         <input type="file" id="banner-upload" name="banner" onChange={handleFileChange} />
                     </div>
                     <div className={styles.btn_container}>
-                        <button type="submit" className={styles.btn_save}>Save</button>
+                        <button type="submit" className={styles.btn_save} onClick={handleBannerUpload}>Save</button>
                         <button type="button" className={styles.btn_cancel} onClick={() => onModifyingBanner()}>Cancel</button>
                     </div>
                 </div>

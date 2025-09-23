@@ -18,12 +18,16 @@
         margin-right: 2rem;
         border: 2px solid var(--bg-section);
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .avatar,
     img {
         border-radius: 50%;
         aspect-ratio: 1/1;
+        object-fit: contain;
     }
 
     .color_title {
@@ -37,6 +41,7 @@
 
 .txt_content {
     padding: 1.2rem;
+    white-space: pre-line;
 }
 
 .container_btn {

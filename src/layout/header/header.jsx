@@ -12,7 +12,7 @@ export default function HeaderPage() {
             <div className="small-title">
                 <TitleLogo />
             </div>
-            <Searchbar />
+            {/* <Searchbar /> */}
             <DesktopNavBar />
             <MobileNavBar />
         </header>

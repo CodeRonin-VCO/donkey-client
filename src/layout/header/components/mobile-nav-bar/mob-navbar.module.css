@@ -12,7 +12,7 @@
     }
 
     &.active {
-        min-height: 20rem;
+        min-height: 30rem;
         margin-top: 1.6rem;
         transition: .5s all ease-in-out;
     }
@@ -159,11 +159,11 @@
     }
 
     40% {
-        transform: translate3d(0, -8rem, 0) scaleY(.5) scaleX(1);
+        transform: translate3d(0, -10rem, 0) scaleY(.5) scaleX(1);
     }
 
     100% {
-        transform: translate3d(0, -8rem, 0) scaleY(.5) scaleX(6);
+        transform: translate3d(0, -10rem, 0) scaleY(.5) scaleX(6);
     }
 }
 
@@ -199,11 +199,11 @@
     }
 
     40% {
-        transform: translate3d(0, 8rem, 0) scaleY(.5) scaleX(1);
+        transform: translate3d(0, 11rem, 0) scaleY(.5) scaleX(1);
     }
 
     100% {
-        transform: translate3d(0, 8rem, 0) scaleY(.5) scaleX(6);
+        transform: translate3d(0, 11rem, 0) scaleY(.5) scaleX(6);
     }
 }
 

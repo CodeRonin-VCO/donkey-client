@@ -18,7 +18,8 @@ export default function DesktopNavBar() {
             <ul className={styles.navbar}>
                 <li><Link to={"/feed"} className={styles.nav_links}>Home</Link></li>
                 <li><Link to={"/profile"} className={styles.nav_links}>Profile</Link></li>
-                <li><Link to={"/feed/message"} className={styles.nav_links}>Messages</Link></li>
+                <li><Link to={"/user"} className={styles.nav_links}>Connections</Link></li>
+                <li><Link to={"/message"} className={styles.nav_links}>Messages</Link></li>
                 {/* // todo: ajouter l'avatar de l'utilisateur */}
                 <li><button type="button" className={styles.btn_disconnect} onClick={handleLogout}>Disconnect</button></li>
             </ul>
