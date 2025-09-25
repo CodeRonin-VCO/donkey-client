@@ -7,20 +7,25 @@ library.add(farHeart, fasHeart, faComment, faFaceSmile, faShareFromSquare, faVid
 // ---- Fin import fontAwesome ----
 
 import styles from "./cards-post.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentsCards from "./../../cards-comment/card-comment.jsx";
 import ListComments from "./../../cards-list-comments/list-comments.jsx";
 import usePosts from "../../../hooks/usePosts.js";
+import logoDonkey from "./../../../assets/logo-donkey-profile.png";
+import { useTranslation } from "react-i18next";
 
 
 export default function PostsCards({ post, token }) {
+    // trad
+    const { t } = useTranslation();
 
-    const { author, content, images, videos, createdAt, likesCount, isLiked, comments, commentsCount } = post;
+    const { author, content, images, videos, createdAt, likesCount, isLiked, comments: initialComment, commentsCount } = post;
 
     const [isLoved, setIsLoved] = useState(isLiked || false);
     const [isLovedCount, setIsLovedCount] = useState(likesCount || 0);
     const [openCommentsSection, setOpenCommentsSection] = useState(false);
     const [isCommentsCount, setIsCommentsCount] = useState(commentsCount || 0);
+    const [comments, setComments] = useState(initialComment || [])
 
     const { fetchToggleLike, fetchGetComments } = usePosts();
 
@@ -52,18 +57,38 @@ export default function PostsCards({ post, token }) {
         };
     };
 
+    const refreshComments = async () => {
+        try {
+            const response = await fetchGetComments(post._id);
+            if (response.success) {
+                setComments(response.comments);
+                setIsCommentsCount(response.comments.length);
+            }
+        } catch (error) {
+            console.error("Failed to refresh comments", error);
+        }
+    };
+    // useEffect qui recharge les commentaires à chaque fois que le compteur change
+    useEffect(() => {
+        if (openCommentsSection) {
+            refreshComments();
+        }
+    }, [isCommentsCount]); // dès que isCommentsCount change, on recharge
+
     // Open/ close section comments
     const toggleCommentsSection = async () => {
         if (!openCommentsSection) {
-            // Load comments if opened section
-            await fetchGetComments(post._id);
+            const response = await fetchGetComments(post._id);
+            if (response.success) {
+                setComments(response.comments);
+            }
         };
 
         setOpenCommentsSection(!openCommentsSection);
     };
 
     // Format date
-    const formattedCreatedAt = new Date(createdAt).toLocaleString("fr-FR", {
+    const formattedCreatedAt = new Date(createdAt).toLocaleString(`${t("feed.fr-FR")}`, {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -74,7 +99,7 @@ export default function PostsCards({ post, token }) {
     return (
         <article className={styles.cards}>
             <div className={styles.cards_head}>
-                <div className={styles.avatar}><img src={author.avatar} alt={`logo-${author.firstname}`} /></div>
+                <div className={styles.avatar}><img src={author.avatar || logoDonkey} alt={`logo-${author.firstname}`} /></div>
                 <div>
                     <h6 className={styles.color_title}>{author.firstname}</h6>
                     <p className={styles.color}><small>{formattedCreatedAt}</small></p>
@@ -109,7 +134,7 @@ export default function PostsCards({ post, token }) {
                 {
                     openCommentsSection && (
                         <div className={styles.section_comments}>
-                            <ListComments comments={comments} />
+                            <ListComments comments={comments} post={post} />
                             <CommentsCards
                                 post={post}
                                 token={token}

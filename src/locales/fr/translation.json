@@ -1,0 +1,104 @@
+{
+    "navbar": {
+        "home": "Accueil",
+        "profile": "Profil",
+        "connections": "Relations",
+        "messages": "Messages",
+        "disconnect": "Déconnexion"
+    },
+    "loginPage": {
+        "login": "Se connecter",
+        "email": "Email",
+        "password": "Mot de passe",
+        "rememberme": "Se souvenir de moi",
+        "forgotpassword": "Mot de passe oublié ?",
+        "submitting": "Envoi en cours",
+        "noaccount": "Vous n'avez pas de compte ?",
+        "register": "S'inscrire"
+    },
+    "register": {
+        "register": "S'inscrire",
+        "Firstname": "Prénom",
+        "Lastname": "Nom",
+        "Email": "Email",
+        "Password": "Mot de passe",
+        "Validation in progress...": "Validation en cours...",
+        "Already have an account?": "Vous avez déjà un compte ?",
+        "Login": "Se connecter"
+    },
+    "disconnect": {
+        "Donkey has trotted off.": "Donkey s'est enfui au trot.",
+        "You’ve been kicked out of the stable.": "Tu as été expulsé de l’écurie.",
+        "Chase him to login?": "Le poursuivre pour se connecter ?"
+    },
+    "notFound": {
+        "Error 404": "Erreur 404.",
+        "Donkeylost": "Donkey est perdu. Et toi aussi."
+    },
+    "feed": {
+        "Welcome": "Bienvenue",
+        "news": "Fil d'actualité",
+        "discover": "Découvrez les dernières publications de votre réseau",
+        "share": "Partagez quelque chose...",
+        "choosePhoto": "Choisir une photo",
+        "chooseVideo": "Choisir une vidéo",
+        "photo": "Photo",
+        "video": "Vidéo",
+        "emoji": "Émoji",
+        "publish": "Publier",
+        "uploadPhoto": "Téléversez votre photo :",
+        "uploadVideo": "Téléversez votre vidéo :",
+        "cancel": "Annuler",
+        "selectEmoji": "Sélectionnez un émoji :",
+        "noPost": "Aucune publication à afficher.",
+        "fr-FR": "fr-FR",
+        "shareS": "Partager",
+        "whatsup": "Quoi de neuf ?",
+        "writeSth": "Écrire un commentaire."
+    },
+    "profile": {
+        "myprofile": "Mon profil",
+        "manageyour": "Gérez vos informations personnelles",
+        "modifypro": "Modifier le profil",
+        "posts": "Publications",
+        "friends": "Amis",
+        "Hearts": "Cœurs donnés",
+        "Firstname": "Prénom",
+        "Lastname": "Nom",
+        "bio": "Bio",
+        "placeBio": "Parlez-nous de vous",
+        "loc": "Localisation",
+        "placeLoc": "Votre ville, pays",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "saving": "Enregistrement...",
+        "userBio": "Votre bio :",
+        "noBio": "Pas de bio pour le moment",
+        "userLoc": "Votre localisation :",
+        "noLoc": "Aucune localisation.",
+        "memberSince": "Membre depuis",
+        "uploadAvatar": "Télécharger votre nouvel avatar :",
+        "uploadBanner": "Télécharger votre nouvelle bannière :"
+    },
+    "connections": {
+        "myconnections": "Mes connexions",
+        "manageNet": "Gérez votre réseau",
+        "search": "Rechercher...",
+        "listFriends": "Liste d'amis",
+        "noFriend": "Aucun ami trouvé.",
+        "removeFriend": "Retirer l'ami du réseau",
+        "addFriend": "Ajouter l'ami au réseau",
+        "listUsers": "Liste des utilisateurs",
+        "noUsers": "Aucun utilisateur trouvé."
+    },
+    "messages": {
+        "msg": "Messages",
+        "exchange": "Échangez avec vos amis",
+        "nomsg": "Aucun message pour le moment",
+        "chatwith": "Discuter avec",
+        "selectFriend": "Sélectionnez un ami pour discuter",
+        "me": "Moi",
+        "writeMsg": "Écrivez votre message...",
+        "send": "Envoyer"
+    }
+}

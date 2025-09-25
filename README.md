@@ -7,3 +7,5 @@
 - react-router
 - FontAwesomeIcon
 - jotai
+- socket.io
+- i18next

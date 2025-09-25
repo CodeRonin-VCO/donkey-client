@@ -1,0 +1,111 @@
+{
+    "navbar": {
+        "home": "Home",
+        "profile": "Profile",
+        "connections": "Connections",
+        "messages": "Messages",
+        "disconnect": "Disconnect"
+    },
+    "loginPage": {
+        "login": "Log in",
+        "email": "Email",
+        "password": "Password",
+        "rememberme": "Remember me",
+        "forgotpassword": "Forgot password?",
+        "submitting": "Submitting",
+        "noaccount": "Don't have an account?",
+        "register": "Register"
+    },
+    "register": {
+        "register": "Register",
+        "Firstname": "Firstname",
+        "Lastname": "Lastname",
+        "Email": "Email",
+        "Password": "Password",
+        "Validation in progress...": "Validation in progress...",
+        "Already have an account?": "Already have an account?",
+        "Login": "Login"
+    },
+    "disconnect": {
+        "Donkey has trotted off.": "Donkey has trotted off.",
+        "You’ve been kicked out of the stable.": "You’ve been kicked out of the stable.",
+        "Chase him to login?": "Chase him to login?"
+    },
+    "notFound": {
+        "Error 404": "Error 404.",
+        "Donkeylost": "Donkey is lost. And so are you."
+    },
+    "forgotPwd": {
+        "memory": "Your memory called.",
+        "vacation": "It’s on vacation. With Donkey.",
+        "reset": "Reset your password",
+        "email": "Email",
+        "sendLink": "Send link"
+    },
+    "feed": {
+        "Welcome": "Welcome",
+        "news": "News feed",
+        "discover": "Discover the latest posts from your network",
+        "share": "Share something...",
+        "choosePhoto": "Choose a photo",
+        "chooseVideo": "Choose a video",
+        "photo": "Photo",
+        "video": "Video",
+        "emoji": "Emoji",
+        "publish": "Publish",
+        "uploadPhoto": "Upload your photo:",
+        "uploadVideo": "Upload your video:",
+        "cancel": "Cancel",
+        "selectEmoji": "Select an emoji:",
+        "noPost": "No posts to display.",
+        "fr-FR": "en-GB",
+        "shareS": "Share",
+        "whatsup": "What's up?",
+        "writeSth": "Write a comment."
+    },
+    "profile": {
+        "myprofile": "My profile",
+        "manageyour": "Manage your personal info",
+        "modifypro": "Modify profile",
+        "posts": "Posts",
+        "friends": "Friends",
+        "Hearts": "Hearts given",
+        "Firstname": "Firstname",
+        "Lastname": "Lastname",
+        "bio": "Bio",
+        "placeBio": "Tell us about yourself",
+        "loc": "Localisation",
+        "placeLoc": "Your city, country",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "userBio": "Your bio :",
+        "noBio": "No bio for the moment",
+        "userLoc": "Your locaction :",
+        "noLoc": "No location.",
+        "memberSince": "Member since",
+        "uploadAvatar": "Upload your new avatar :",
+        "uploadBanner": "Upload your new banner :"
+    },
+    "connections": {
+        "myconnections": "My connections",
+        "manageNet": "Manage your network",
+        "search": "Search...",
+        "listFriends": "List of friends",
+        "noFriend": "No friends found.",
+        "removeFriend": "Remove friend to network",
+        "addFriend": "Add friend to network",
+        "listUsers": "List of users",
+        "noUsers": "No users found."
+    },
+    "messages": {
+        "msg": "Messages",
+        "exchange": "Exchange with your friends",
+        "nomsg": "No messages yet",
+        "chatwith": "Chat with",
+        "selectFriend": "Select a friend to chat",
+        "me": "Me",
+        "writeMsg": "Write your message...",
+        "send": "Send"
+    }
+}

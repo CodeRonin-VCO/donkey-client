@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./bio.module.css";
+import styles from "./profile.module.css";
 import { faCalendar, faCamera, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import logoDonkey from "./../../assets/logo-donkey-profile.png";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +8,13 @@ import { useAtom } from "jotai";
 import { tokenAtom, userAtom } from "../../stores/auth.stores.js";
 import useUser from "../../hooks/useUser.js";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 
-export default function BioComponent() {
+export default function ProfileComponent() {
+    // trad
+    const { t } = useTranslation();
+
     const [isModified, setIsModified] = useState(false);
     const [isBanner, setIsBanner] = useState(false);
     const [isAvatar, setIsAvatar] = useState(false);
@@ -82,6 +86,7 @@ export default function BioComponent() {
 
         try {
             await uploadUserBanner(file);
+            await fetchGetPersonalData();
             setIsBanner(false);
             setBannerFileName("Upload banner 📎");
         } catch (error) {
@@ -99,6 +104,7 @@ export default function BioComponent() {
 
         try {
             await uploadUserAvatar(file);
+            await fetchGetPersonalData();
             setIsAvatar(false);
             setAvatarFileName("Upload avatar 📎");
         } catch (error) {
@@ -192,7 +198,7 @@ export default function BioComponent() {
                     <div className={styles.modify}>
                         <button type="button" className={styles.btn_add_content} onClick={() => onModifyInfo()}>
                             <FontAwesomeIcon icon={faPencil} />
-                            <span className={styles.content_type}>Modify profile</span>
+                            <span className={styles.content_type}>{t("profile.modifypro")}</span>
                         </button>
                         <button type="button" className={styles.btn_delete_profile} onClick={handleDeleteAccount}>
                             <FontAwesomeIcon icon={faTrashAlt} />
@@ -202,15 +208,15 @@ export default function BioComponent() {
                 <div className={styles.social_info}>
                     <div>
                         <div className={styles.number}>{user?.postsCount ?? 0}</div>
-                        <div className={styles.color_transp}>Posts</div>
+                        <div className={styles.color_transp}>{t("profile.posts")}</div>
                     </div>
                     <div>
                         <div className={styles.number}>{user?.friendsCount ?? 0}</div>
-                        <div className={styles.color_transp}>Friends</div>
+                        <div className={styles.color_transp}>{t("profile.friends")}</div>
                     </div>
                     <div>
                         <div className={styles.number}>{user?.heartsGivenCount ?? 0}</div>
-                        <div className={styles.color_transp}>Hearts given</div>
+                        <div className={styles.color_transp}>{t("profile.Hearts")}</div>
                     </div>
                 </div>
 
@@ -218,34 +224,34 @@ export default function BioComponent() {
                     isModified
                         ? <form action={handleform} className={styles.form_info}>
                             <div className={styles.input_group}>
-                                <label htmlFor="firstname">Firstname:</label>
+                                <label htmlFor="firstname">{t("profile.Firstname")}:</label>
                                 <input type="text" id="firstname" name="firstname" placeholder="Ex.: Jean" defaultValue={user?.firstname || ""} />
                             </div>
                             <div className={styles.input_group}>
-                                <label htmlFor="lastname">Lastname:</label>
+                                <label htmlFor="lastname">{t("profile.Lastname")}:</label>
                                 <input type="text" id="lastname" name="lastname" placeholder="Ex.: Peuplu" defaultValue={user?.lastname || ""} />
                             </div>
                             <div className={styles.input_group}>
-                                <label htmlFor="bio">Bio</label>
-                                <textarea name="bio" id="bio" placeholder="Tell us about yourself" rows={3} defaultValue={user?.bio || ""}></textarea>
+                                <label htmlFor="bio">{t("profile.bio")}</label>
+                                <textarea name="bio" id="bio" placeholder={t("profile.placeBio")} rows={3} defaultValue={user?.bio || ""}></textarea>
                             </div>
                             <div className={styles.input_group}>
-                                <label htmlFor="loc">Localisation</label>
-                                <input type="text" id="loc" name="loc" placeholder="Your city, country" defaultValue={user?.loc || ""} />
+                                <label htmlFor="loc">{t("profile.loc")}</label>
+                                <input type="text" id="loc" name="loc" placeholder={t("profile.placeLoc")} defaultValue={user?.loc || ""} />
                             </div>
                             <div className={styles.btn_container}>
-                                <button type="submit" className={styles.btn_save}>{isPending ? "Saving..." : "Save"}</button>
-                                <button type="button" className={styles.btn_cancel} onClick={() => onModifyInfo()}>Cancel</button>
+                                <button type="submit" className={styles.btn_save}>{isPending ? `${t("profile.saving")}` : `${t("profile.save")}`}</button>
+                                <button type="button" className={styles.btn_cancel} onClick={() => onModifyInfo()}>{t("profile.cancel")}</button>
                             </div>
                         </form>
                         : <div className={styles.connection_info}>
-                            <h6>User bio :</h6>
-                            <p className={styles.color_transp}>{user?.bio || "No bio for the moment"}</p>
-                            <h6>User loc :</h6>
-                            <p className={styles.color_transp}>{user?.loc || "No location."}</p>
+                            <h6>{t("profile.userBio")}</h6>
+                            <p className={styles.color_transp}>{user?.bio || `${t("profile.noBio")}`}</p>
+                            <h6>{t("profile.userLoc")}</h6>
+                            <p className={styles.color_transp}>{user?.loc || `${t("profile.noLoc")}`}</p>
                             <p className={styles.color_transp + " " + styles.membersince}>
                                 <FontAwesomeIcon icon={faCalendar} />
-                                Member since {formattedCreatedAt}
+                                {t("profile.memberSince")} {formattedCreatedAt}
                             </p>
                         </div>
                 }
@@ -254,27 +260,27 @@ export default function BioComponent() {
             {/* // ==== Popup ==== */}
             {
                 isAvatar && <div className={styles.popup}>
-                    <h6>Upload your new avatar :</h6>
+                    <h6>{t("profile.uploadAvatar")}</h6>
                     <div className={styles.container_input}>
                         <label htmlFor="avatar-upload" className={styles.custom_file_upload}>{avatarFileName}</label>
                         <input type="file" id="avatar-upload" name="avatar" onChange={handleFileChange} />
                     </div>
                     <div className={styles.btn_container}>
-                        <button type="submit" className={styles.btn_save} onClick={handleAvatarUpload}>Save</button>
-                        <button type="button" className={styles.btn_cancel} onClick={() => onModifyingAvatar()}>Cancel</button>
+                        <button type="submit" className={styles.btn_save} onClick={handleAvatarUpload}>{t("profile.save")}</button>
+                        <button type="button" className={styles.btn_cancel} onClick={() => onModifyingAvatar()}>{t("profile.cancel")}</button>
                     </div>
                 </div>
             }
             {
                 isBanner && <div className={styles.popup}>
-                    <h6>Upload your new banner :</h6>
+                    <h6>{t("profile.uploadBanner")}</h6>
                     <div className={styles.container_input}>
                         <label htmlFor="banner-upload" className={styles.custom_file_upload}>{bannerFileName}</label>
                         <input type="file" id="banner-upload" name="banner" onChange={handleFileChange} />
                     </div>
                     <div className={styles.btn_container}>
-                        <button type="submit" className={styles.btn_save} onClick={handleBannerUpload}>Save</button>
-                        <button type="button" className={styles.btn_cancel} onClick={() => onModifyingBanner()}>Cancel</button>
+                        <button type="submit" className={styles.btn_save} onClick={handleBannerUpload}>{t("profile.save")}</button>
+                        <button type="button" className={styles.btn_cancel} onClick={() => onModifyingBanner()}>{t("profile.cancel")}</button>
                     </div>
                 </div>
             }

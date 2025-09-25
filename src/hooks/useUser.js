@@ -69,10 +69,54 @@ export default function useUser() {
         }
     };
 
+    const fetchGetUserFriends = async () => {
+        try {
+            const result = await userService.getUserFriends(token);
+
+            return { success: true, friends: result.friends }
+
+        } catch (error) {
+            throw error;
+        };
+    };
+
+    const fetchGetAllUsers = async () => {
+        try {
+            const result = await userService.getAllUser(token);
+
+            return { success: true, users: result.users }
+
+        } catch (error) {
+            throw error;
+        };
+    };
+
+    const fetchAddFriend = async (friendId) => {
+        try {
+            const result = await userService.addFriend(token, friendId);
+
+            return { success: true, friends: result.friends };
+
+        } catch (error) {
+            throw error;
+        };
+    };
+
+    const fetchDeleteFriend = async (friendId) => {
+        try {
+            const result = await userService.deleteFriend(token, friendId);
+
+            return { success: true };
+
+        } catch (error) {
+            throw error;
+        };
+    };
+
     const fetchGetOtherUserData = async (userId) => {
         try {
             const result = await userService.getOtherUserData(token, userId);
-            return { success: true, user: result.user };
+            return { success: true, user: result.users };
         } catch (error) {
             throw error;
         }
@@ -85,6 +129,10 @@ export default function useUser() {
         fetchDeletePersonalData,
         uploadUserBanner,
         uploadUserAvatar,
+        fetchGetUserFriends,
+        fetchGetAllUsers,
+        fetchAddFriend,
+        fetchDeleteFriend,
         fetchGetOtherUserData
     };
 };

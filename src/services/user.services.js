@@ -106,6 +106,76 @@ export const uploadAvatar = async (token, avatarFile) => {
     return response.json();
 };
 
+export const getUserFriends = async (token) => {
+    const response = await fetch(`${baseUrl}/connections`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch user friends");
+    };
+
+    return response.json();
+};
+
+export const getAllUser = async (token) => {
+    const response = await fetch(`${baseUrl}/connections/allusers`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch all users");
+    };
+
+    return response.json();
+}
+
+export const addFriend = async (token, friendId) => {
+    const response = await fetch(`${baseUrl}/connections`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ friendId })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch all users");
+    };
+
+    return response.json();
+}
+
+export const deleteFriend = async (token, friendId) => {
+    const response = await fetch(`${baseUrl}/connections`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ friendId })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete friend from list");
+    }
+
+    return response.json();
+}
+
 export const getOtherUserData = async (token, userId) => {
     const response = await fetch(`${baseUrl}/${userId}`, {
         method: "GET",
@@ -118,7 +188,7 @@ export const getOtherUserData = async (token, userId) => {
     if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to fetch other user data");
-    }
+    };
 
     return response.json();
 };

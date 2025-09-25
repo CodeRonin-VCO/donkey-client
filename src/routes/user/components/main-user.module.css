@@ -1,3 +1,22 @@
 .main {
     flex-grow: 1;
 }
+
+.wrapper {
+    max-width: 700px;
+    min-width: 400px;
+    padding: 2%;
+    margin: 0 auto 3rem;
+}
+
+.color {
+    color: #f8f9fa71;
+}
+
+.hgroup {
+    text-align: center;
+}
+
+.search {
+    margin-top: 1.6rem;
+}

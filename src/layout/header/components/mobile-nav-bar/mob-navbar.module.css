@@ -19,7 +19,7 @@
 
     .close_menu {
         position: absolute;
-        top: 10%;
+        top: 0;
         right: 15%;
         cursor: pointer;
         opacity: 0;
@@ -126,17 +126,30 @@
             }
         }
 
-        .navlink {
+        .navlink, .btn_disconnect {
+            width: fit-content;
+            margin: 0;
+            padding: .3rem .8rem;
             color: var(--text);
-            font-size: clamp(2rem,   2.3rem + 0.6vw, 3.2rem);
+            font-size: clamp(2rem, 2.3rem + 0.6vw, 3.2rem);
+            font-family: var(--font-accent);
+            font-weight: 300;
             text-decoration: none;
+            text-transform: uppercase;
+            background-color: transparent;
+            border: none;
+            border-radius: .8rem;
+            transition: .3s all ease-in-out;
+            outline: none;
 
             &:hover {
-                padding: .8rem 1.2rem;
                 background-color: var(--bg-section);
-                border-radius: .8rem;
                 transform: translate(0);
             }
+        }
+
+        .btn_disconnect {
+           padding: 0 .8rem;
         }
 
         &.active {
@@ -199,11 +212,11 @@
     }
 
     40% {
-        transform: translate3d(0, 11rem, 0) scaleY(.5) scaleX(1);
+        transform: translate3d(0, 14rem, 0) scaleY(.5) scaleX(1);
     }
 
     100% {
-        transform: translate3d(0, 11rem, 0) scaleY(.5) scaleX(6);
+        transform: translate3d(0, 14rem, 0) scaleY(.5) scaleX(6);
     }
 }
 

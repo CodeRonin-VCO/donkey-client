@@ -3,8 +3,12 @@ import { useActionState, useState } from "react";
 import { nanoid } from "nanoid";
 import logoDonkey from "./../../assets/logo-donkey.jpg";
 import useAuth from "../../hooks/useAuth.js";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterPage({ switchForm }) {
+    // trad
+    const { t } = useTranslation();
+
     // Manage auth
     const { fetchRegister, fetchLogin } = useAuth();
 
@@ -63,7 +67,6 @@ export default function RegisterPage({ switchForm }) {
         };
 
         try {
-            console.log("Data sent to backend:", data);
             const result = await fetchRegister(data.firstname, data.lastname, data.email, data.password);
 
             // Styling input
@@ -87,7 +90,7 @@ export default function RegisterPage({ switchForm }) {
             };
 
         } catch (error) {
-            
+
             return {
                 data: null,
                 errors: {},
@@ -105,10 +108,10 @@ export default function RegisterPage({ switchForm }) {
             <div className={styles.logo}>
                 <img src={logoDonkey} alt="logo-donkey" />
             </div>
-            <h3>Register</h3>
+            <h3>{t("register.register")}</h3>
             <div className={styles.input_group}>
                 <input type="text" name="firstname" onChange={handleChangeField("firstname")} />
-                {emptyFields.firstname && <label htmlFor="firstname">Firstname</label>}
+                {emptyFields.firstname && <label htmlFor="firstname">{t("register.Firstname")}</label>}
 
                 {/* Error message */}
                 {state.errors.firstname && (<span className={styles.error_msg}>{state.errors.firstname}</span>)}
@@ -116,7 +119,7 @@ export default function RegisterPage({ switchForm }) {
             </div>
             <div className={styles.input_group}>
                 <input type="text" name="lastname" onChange={handleChangeField("lastname")} />
-                {emptyFields.lastname && <label htmlFor="lastname">Lastname</label>}
+                {emptyFields.lastname && <label htmlFor="lastname">{t("register.Lastname")}</label>}
 
                 {/* Error message */}
                 {state.errors.lastname && (<span className={styles.error_msg}>{state.errors.lastname}</span>)}
@@ -124,7 +127,7 @@ export default function RegisterPage({ switchForm }) {
             </div>
             <div className={styles.input_group}>
                 <input type="email" name="email" onChange={handleChangeField("email")} />
-                {emptyFields.email && <label htmlFor="email">Email</label>}
+                {emptyFields.email && <label htmlFor="email">{t("register.Email")}</label>}
 
                 {/* Error message */}
                 {state.errors.email && (<span className={styles.error_msg}>{state.errors.email}</span>)}
@@ -141,7 +144,7 @@ export default function RegisterPage({ switchForm }) {
                         handleChangePassword(e.target.value);
                     }}
                 />
-                {password === "" && <label htmlFor="password">Password</label>}
+                {password === "" && <label htmlFor="password">{t("register.Password")}</label>}
 
                 {/* Error message */}
                 {state.errors.password
@@ -151,11 +154,11 @@ export default function RegisterPage({ switchForm }) {
                 {/* ------------- */}
             </div>
 
-            <button type="submit" disabled={isPending}>{(isPending) ? "Validation in progress..." : "Register"}</button>
+            <button type="submit" disabled={isPending}>{(isPending) ? `${t("register.Validation in progress...")}` : `${t("register.register")}`}</button>
             {state.message && (<p className={styles.message}>{state.message}</p>)}
 
             <div className={styles.register_link}>
-                <p>Already have an account? <button type="button" onClick={switchForm}>Login</button></p>
+                <p>{t("register.Already have an account?")} <button type="button" onClick={switchForm}>{t("register.Login")}</button></p>
             </div>
         </form>
     )

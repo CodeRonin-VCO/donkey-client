@@ -1,13 +1,15 @@
 .container_list {
     margin: 1.6rem 0;
     display: flex;
+    justify-content: space-between;
     gap: 1.6rem;
 }
 
 .cards_head {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: 0 auto;
+    margin: 0;
 
     .avatar {
         width: 5rem;

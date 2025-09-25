@@ -1,0 +1,55 @@
+.wrapper {
+    margin-top: 5.2rem;
+    padding: 2%;
+    color: var(--text);
+    border: 1px solid var(--bg-section);
+    border-radius: .8rem;
+}
+
+.title {
+    padding: 2rem 0 0;
+    text-align: center;
+}
+
+.user {
+    margin: 2rem auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .user_avatar {
+        width: 5rem;
+        height: 5rem;
+        border: 2px solid var(--bg-section);
+        overflow: hidden;
+    }
+
+    .user_avatar,
+    img {
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+        object-fit: contain;
+    }
+}
+
+.container_btn {
+    margin-left: 2rem;
+
+    button {
+        width: 3.5rem;
+        height: 3.5rem;
+        padding: 0;
+        margin: 0;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            color: var(--bg);
+            background-color: var(--valid);
+            transform: scale(1.2);
+        }
+    }
+}

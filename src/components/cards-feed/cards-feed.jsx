@@ -4,10 +4,13 @@ import { useEffect } from "react";
 import PostsCards from "./components/cards-post.jsx";
 import { useAtom } from "jotai";
 import { tokenAtom, userAtom } from "../../stores/auth.stores.js";
-
+import { useTranslation } from "react-i18next";
 
 
 export default function FeedCards() {
+    // trad
+    const { t } = useTranslation();
+
     const { posts, fetchGetPosts } = usePosts();
     const [token] = useAtom(tokenAtom)
     const [user] = useAtom(userAtom);
@@ -30,7 +33,7 @@ export default function FeedCards() {
                     />
                 ))
             ) : (
-                <p className={styles.empty}>Aucun post à afficher.</p>
+                <p className={styles.empty}>{t("feed.noPost")}</p>
             )}
         </>
     )

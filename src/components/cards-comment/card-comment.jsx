@@ -1,16 +1,20 @@
 import styles from "./card-comment.module.css";
-import logoDonkey from "./../../assets/logo-donkey-perplexe.png";
+import logoDonkey from "./../../assets/logo-donkey-profile.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import usePosts from "../../hooks/usePosts.js";
 import { useAtom } from "jotai";
 import { userAtom } from "../../stores/auth.stores.js";
+import { useTranslation } from "react-i18next";
 
 
 export default function CommentsCards({ post, token, onCommentsAdded }) {
+    // trad
+    const { t } = useTranslation();
+
     const [user] = useAtom(userAtom);
-    const {_id} = post;
+    const { _id } = post;
     const [newCommentText, setNewCommentText] = useState("");
 
     const { fetchAddComments } = usePosts();
@@ -22,7 +26,7 @@ export default function CommentsCards({ post, token, onCommentsAdded }) {
             const result = await fetchAddComments(_id, newCommentText, token);
 
             onCommentsAdded(result.commentsCount);
-            setNewCommentText(""); // réinitialiser le champ    
+            setNewCommentText(""); // reset field
 
         } catch (error) {
             console.error("Error adding comment:", error);
@@ -41,10 +45,10 @@ export default function CommentsCards({ post, token, onCommentsAdded }) {
                 <textarea
                     name="comment"
                     id="comment"
-                    placeholder="Write a comment."
+                    placeholder={t("feed.writeSth")}
                     className={styles.add_comment}
-                        rows={1}
-                        value={newCommentText}
+                    rows={1}
+                    value={newCommentText}
                     onChange={(e) => setNewCommentText(e.target.value)}
                     onInput={(e) => {
                         e.target.style.height = 'auto'
@@ -54,7 +58,7 @@ export default function CommentsCards({ post, token, onCommentsAdded }) {
 
                 <button className={styles.btn_publish_comment} type="submit">
                     <FontAwesomeIcon icon={faShareNodes} />
-                    <span className={styles.content_type}>Share</span>
+                    <span className={styles.content_type}>{t("feed.shareS")}</span>
                 </button>
             </form>
         </article>

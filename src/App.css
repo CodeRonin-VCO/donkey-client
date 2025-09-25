@@ -11,6 +11,8 @@
     --error: #FF5C7A;
     --warning: #F97316;
     --valid: #5CFF7A;
+    --msg-sent: #005f73;
+    --msg-rec: #0a9396;
 
     /* ---- Fonts ---- */
     --font-title: 'Audiowide', sans-serif;
