@@ -23,7 +23,7 @@ export default function usePosts() {
                 videos: result.post.videos.map(vid => vid.startsWith('http') ? vid : `http://localhost:8008${vid}`)
             };
             setPosts(prev => [correctedPost, ...prev]);
-
+            
             return { success: true, post: result.post }
 
         } catch (error) {

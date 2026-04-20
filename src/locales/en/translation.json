@@ -96,7 +96,11 @@
         "removeFriend": "Remove friend to network",
         "addFriend": "Add friend to network",
         "listUsers": "List of users",
-        "noUsers": "No users found."
+        "noUsers": "No users found.",
+        "viewProfile": "View Profile",
+        "viewProfileMessage": "Do you want to view the profile of",
+        "viewProfileBtn": "View Profile",
+        "cancel": "Cancel"
     },
     "messages": {
         "msg": "Messages",

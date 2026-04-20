@@ -135,7 +135,7 @@ export default function LoginPage({ switchForm }) {
             }
 
             <div className={styles.register_link}>
-                <p>{t("loginPage.noaccount")}Don't have an account? <button type="button" onClick={switchForm}>{t("loginPage.register")}</button></p>
+                <p>{t("loginPage.noaccount")} <button type="button" onClick={switchForm}>{t("loginPage.register")}</button></p>
             </div>
         </form>
     )

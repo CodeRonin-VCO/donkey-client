@@ -3,7 +3,7 @@ import styles from "./cards-feed.module.css";
 import { useEffect } from "react";
 import PostsCards from "./components/cards-post.jsx";
 import { useAtom } from "jotai";
-import { tokenAtom, userAtom } from "../../stores/auth.stores.js";
+import { tokenAtom } from "../../stores/auth.stores.js";
 import { useTranslation } from "react-i18next";
 
 
@@ -13,7 +13,6 @@ export default function FeedCards() {
 
     const { posts, fetchGetPosts } = usePosts();
     const [token] = useAtom(tokenAtom)
-    const [user] = useAtom(userAtom);
 
     useEffect(() => {
         if (token) {

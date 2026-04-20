@@ -193,4 +193,21 @@ export const getOtherUserData = async (token, userId) => {
     return response.json();
 };
 
+export const getProfileById = async (token, userId) => {
+    const response = await fetch(`${baseUrl}/connections/${userId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch user profile");
+    };
+
+    return response.json();
+}
+
 

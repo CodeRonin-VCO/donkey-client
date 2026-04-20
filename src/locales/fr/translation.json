@@ -78,7 +78,10 @@
         "noLoc": "Aucune localisation.",
         "memberSince": "Membre depuis",
         "uploadAvatar": "Télécharger votre nouvel avatar :",
-        "uploadBanner": "Télécharger votre nouvelle bannière :"
+        "uploadBanner": "Télécharger votre nouvelle bannière :",
+        "viewProfile": "Consulter le profil",
+        "viewProfileMessage": "Voulez-vous consulter le profil de",
+        "viewProfileBtn": "Voir le profil"
     },
     "connections": {
         "myconnections": "Mes connexions",
@@ -89,7 +92,8 @@
         "removeFriend": "Retirer l'ami du réseau",
         "addFriend": "Ajouter l'ami au réseau",
         "listUsers": "Liste des utilisateurs",
-        "noUsers": "Aucun utilisateur trouvé."
+        "noUsers": "Aucun utilisateur trouvé.",
+        "cancel": "Annuler"
     },
     "messages": {
         "msg": "Messages",

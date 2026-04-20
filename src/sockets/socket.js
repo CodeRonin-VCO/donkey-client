@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:8007";
+const SOCKET_URL = "http://localhost:8008";
 
 export function createSocket(token) {
     return io(SOCKET_URL, {

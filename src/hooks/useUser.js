@@ -116,7 +116,17 @@ export default function useUser() {
     const fetchGetOtherUserData = async (userId) => {
         try {
             const result = await userService.getOtherUserData(token, userId);
-            return { success: true, user: result.users };
+            return { success: true, user: result.user };
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    const fetchGetProfileById = async (userId) => {
+        try {
+            const result = await userService.getProfileById(token, userId);
+
+            return { success: true, user: result.user }
         } catch (error) {
             throw error;
         }
@@ -133,6 +143,7 @@ export default function useUser() {
         fetchGetAllUsers,
         fetchAddFriend,
         fetchDeleteFriend,
-        fetchGetOtherUserData
+        fetchGetOtherUserData,
+        fetchGetProfileById
     };
 };
